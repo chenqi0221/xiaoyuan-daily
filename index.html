@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小媛日报 · 2026-06-09</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06070B; --card: #0F1219; --border: #1A1F2E;
+    --text: #E2E8F0; --dim: #64748B; --gold: #FBBF24;
+    --green: #22C55E; --red: #EF4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Serif SC', 'Inter', serif;
+    padding: 16px; max-width: 800px; margin: 0 auto;
+  }
+  .header { text-align: center; padding: 24px 0 16px; }
+  .header .logo { font-size: 32px; }
+  .header h1 {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(90deg, #FBBF24, #EF4444);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin: 8px 0;
+  }
+  .header .date { font-size: 12px; color: var(--dim); }
+  .section { margin: 20px 0; }
+  .section-title {
+    font-size: 16px; font-weight: 900; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 8px; text-align: center;
+  }
+  .stat-card .label { font-size: 10px; color: var(--dim); margin-bottom: 4px; }
+  .stat-card .value { font-size: 18px; font-weight: 900; font-family: 'Inter', sans-serif; }
+  .stat-card .sub { font-size: 10px; color: var(--green); }
+  .idx-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 16px; margin-bottom: 8px;
+  }
+  .idx-card .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .idx-card .name { font-size: 14px; font-weight: 700; }
+  .idx-card .points { font-size: 13px; font-family: 'Inter', sans-serif; }
+  .idx-card .bar-track { height: 8px; background: #1A1F2E; border-radius: 4px; overflow: hidden; }
+  .idx-card .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--red), #F59E0B); }
+  .idx-card .pct { font-size: 11px; color: var(--dim); margin-top: 4px; text-align: right; font-family: 'Inter', sans-serif; }
+  .trend-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 12px; margin-bottom: 6px;
+  }
+  .trend-item .rank {
+    font-size: 14px; font-weight: 900; min-width: 20px;
+    text-align: center; font-family: 'Inter', sans-serif; color: var(--dim);
+  }
+  .trend-item .rank.hot { color: var(--red); }
+  .trend-item .title { flex: 1; font-size: 13px; line-height: 1.4; }
+  .trend-item .meta { font-size: 10px; color: var(--dim); font-family: 'Inter', sans-serif; white-space: nowrap; }
+  .platform { margin-bottom: 16px; }
+  .platform-header {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 700; margin-bottom: 8px; padding-left: 4px;
+  }
+  .platform-header .icon { font-size: 16px; }
+  .footer { text-align: center; padding: 20px 0; border-top: 1px solid var(--border); margin-top: 24px; }
+  .footer .note { font-size: 10px; color: var(--dim); opacity: 0.5; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">📡 小媛日报</div>
+    <h1>A股 · 热点 · 一网打尽</h1>
+    <div class="date">2026.06.09 星期二</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="label">上证指数</div>
+      <div class="value" style="color: var(--red);">4010.03</div>
+      <div class="sub">+1.28%</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">成交额</div>
+      <div class="value">1.82万亿</div>
+      <div class="sub">较昨日 ↑2589亿</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">涨停/跌停</div>
+      <div class="value">128 / 10</div>
+      <div class="sub">上涨3847家</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="dot"></div>A股收盘速报</div>
+    <div class="idx-card">
+      <div class="top"><span class="name">🟡 上证指数</span><span class="points" style="color:var(--red);">4010.03</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:128px;"></div></div>
+      <div class="pct" style="color:var(--red);">+1.28% (+50.73)</div>
+    </div>
+    <div class="idx-card">
+      <div class="top"><span class="name">🔴 深圳成指</span><span class="points" style="color:var(--red);">15268.71</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:302px;"></div></div>
+      <div class="pct" style="color:var(--red);">+3.02% (+451.39)</div>
+    </div>
+    <div class="idx-card">
+      <div class="top"><span class="name">🔵 创业板指</span><span class="points" style="color:var(--red);">3961.75</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:393px;"></div></div>
+      <div class="pct" style="color:var(--red);">+3.93% (+151.28)</div>
+    </div>
+    <div class="idx-card">
+      <div class="top"><span class="name">🟠 科创50</span><span class="points" style="color:var(--red);">1663.11</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:417px;"></div></div>
+      <div class="pct" style="color:var(--red);">+4.17% (+67.25)</div>
+    </div>
+    <div class="idx-card">
+      <div class="top"><span class="name">🟢 中证500</span><span class="points" style="color:var(--red);">8176.18</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:267px;"></div></div>
+      <div class="pct" style="color:var(--red);">+2.67% (+213.49)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="dot"></div>今日热点TOP5</div>
+    <div class="trend-item"><span class="rank hot">1</span><span class="title">莫离热度像跳楼机</span><span class="meta">117.2万</span></div>
+    <div class="trend-item"><span class="rank hot">2</span><span class="title">国足vs泰国</span><span class="meta">84.5万</span></div>
+    <div class="trend-item"><span class="rank hot">3</span><span class="title">让中朝传统友谊世代传承</span><span class="meta">82.5万</span></div>
+    <div class="trend-item"><span class="rank">4</span><span class="title">李昀锐单手搂腰边走边吻</span><span class="meta">79.9万</span></div>
+    <div class="trend-item"><span class="rank">5</span><span class="title">赛豆汽车正脸</span><span class="meta">79.0万</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="dot" style="background:var(--dim);"></div>其他平台热门</div>
+    <div class="platform">
+      <div class="platform-header"><span class="icon">📖</span>知乎热榜</div>
+      <div class="trend-item"><span class="rank">1</span><span class="title">同济大学会解聘在岗教师？</span></div>
+      <div class="trend-item"><span class="rank">2</span><span class="title">儿子饿死也不吃有生姜的抄手</span></div>
+      <div class="trend-item"><span class="rank">3</span><span class="title">人形机器人价格大跳水</span></div>
+      <div class="trend-item"><span class="rank">4</span><span class="title">钉钉副总裁发表长文宣布离职</span></div>
+    </div>
+    <div class="platform">
+      <div class="platform-header"><span class="icon">📺</span>B站热门</div>
+      <div class="trend-item"><span class="rank">1</span><span class="title">锐评2026年数学高考雷霆大怒</span><span class="meta">373.1万</span></div>
+      <div class="trend-item"><span class="rank">2</span><span class="title">追逐卡蕾多首次测试招募PV</span><span class="meta">266.7万</span></div>
+    </div>
+    <div class="platform">
+      <div class="platform-header"><span class="icon">💻</span>Hacker News</div>
+      <div class="trend-item"><span class="rank">1</span><span class="title">Apple发布Gemini AI架构648分登顶</span></div>
+      <div class="trend-item"><span class="rank">2</span><span class="title">OpenCV 5发布</span></div>
+    </div>
+    <div class="platform">
+      <div class="platform-header"><span class="icon">🐦</span>X/Twitter</div>
+      <div class="trend-item"><span class="rank">1</span><span class="title">世界棒球12强赛 日本vs韩国</span></div>
+      <div class="trend-item"><span class="rank">2</span><span class="title">日本棒球3连胜</span></div>
+    </div>
+  </div>
+
+  <div class="footer"><div class="note">Powered by 小媛 · 数据来源：各平台实时热榜</div></div>
+</body>
+</html>
