@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小媛日报 - 全平台热点速报</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#06070B; --card:#0F1219; --border:#1A1F2E; --text:#E2E8F0; --dim:#64748B; --gold:#FBBF24; --red:#EF4444; --green:#22C55E; --blue:#3B82F6; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Noto Serif SC','Inter',serif; padding:16px; max-width:800px; margin:0 auto; }
+.header { text-align:center; padding:24px 0 16px; border-bottom:1px solid var(--border); }
+.header .logo { font-size:32px; }
+.header h1 { font-size:22px; font-weight:900; background:linear-gradient(90deg,#FBBF24,#EF4444); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:8px 0; }
+.header .date { font-size:12px; color:var(--dim); }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:20px 0; }
+.stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 8px; text-align:center; }
+.stat-card .label { font-size:10px; color:var(--dim); margin-bottom:4px; }
+.stat-card .value { font-size:18px; font-weight:900; }
+.section { margin:20px 0; }
+.section-title { font-size:16px; font-weight:900; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.section-title .dot { width:8px; height:8px; border-radius:50%; background:var(--gold); }
+.section-title .dot.red { background:var(--red); }
+.section-title .dot.blue { background:var(--blue); }
+.idx-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:8px; }
+.idx-card .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.idx-card .name { font-size:14px; font-weight:700; }
+.idx-card .points { font-size:13px; }
+.idx-card .bar-track { height:8px; background:#1A1F2E; border-radius:4px; overflow:hidden; }
+.idx-card .bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--red),#F59E0B); }
+.idx-card .pct { font-size:11px; color:var(--dim); margin-top:4px; text-align:right; }
+.trend-item { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin-bottom:6px; }
+.trend-item.hidden { display:none; }
+.expand-btn { background:none; border:1px solid var(--border); color:var(--gold); font-size:12px; font-family:'Noto Serif SC',sans-serif; padding:8px 16px; border-radius:8px; cursor:pointer; margin-top:6px; width:100%; text-align:center; transition:all .2s; }
+.expand-btn:hover { background:var(--border); }
+.expand-btn .arrow { transition:transform .2s; display:inline-block; }
+.expand-btn.expanded .arrow { transform:rotate(180deg); }
+.expand-btn .count { font-size:11px; color:var(--dim); }
+.footer { text-align:center; padding:20px 0; border-top:1px solid var(--border); margin-top:24px; }
+.footer .note { font-size:10px; color:var(--dim); opacity:0.5; }
+</style>
+</head>
+<body>
+<div class="header"><div class="logo">📡 小媛日报</div><h1>10大平台 · 全境热点</h1><div class="date">2026.06.10 星期三 · 实时汇总</div></div>
+<div class="stats">
+<div class="stat-card"><div class="label">上证指数</div><div class="value" style="color:var(--red);">4010.03</div><div style="font-size:10px;color:var(--green);">+1.28%</div></div>
+<div class="stat-card"><div class="label">成交额</div><div class="value">1.82万亿</div><div style="font-size:10px;color:var(--green);">↑2589亿</div></div>
+<div class="stat-card"><div class="label">涨停/跌停</div><div class="value">128/10</div><div style="font-size:10px;color:var(--green);">上涨3847家</div></div>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot"></div>A股收盘速报</div>
+<div class="idx-card"><div class="top"><span class="name">🟡 上证指数</span><span class="points">4010.03</span></div><div class="bar-track"><div class="bar-fill" style="width:128px;"></div></div><div class="pct" style="color:var(--red);">+1.28% (+50.73)</div></div>
+<div class="idx-card"><div class="top"><span class="name">🔴 深圳成指</span><span class="points">15268.71</span></div><div class="bar-track"><div class="bar-fill" style="width:302px;"></div></div><div class="pct" style="color:var(--red);">+3.02% (+451.39)</div></div>
+<div class="idx-card"><div class="top"><span class="name">🔵 创业板指</span><span class="points">3961.75</span></div><div class="bar-track"><div class="bar-fill" style="width:393px;"></div></div><div class="pct" style="color:var(--red);">+3.93% (+151.28)</div></div>
+<div class="idx-card"><div class="top"><span class="name">🟠 科创50</span><span class="points">1663.11</span></div><div class="bar-track"><div class="bar-fill" style="width:417px;"></div></div><div class="pct" style="color:var(--red);">+4.17% (+67.25)</div></div>
+<div class="idx-card"><div class="top"><span class="name">🟢 中证500</span><span class="points">8176.18</span></div><div class="bar-track"><div class="bar-fill" style="width:267px;"></div></div><div class="pct" style="color:var(--red);">+2.67% (+213.49)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟣 上证50</span><span class="points">2891.45</span></div><div class="bar-track"><div class="bar-fill" style="width:189px;"></div></div><div class="pct" style="color:var(--green);">+1.45% (+41.23)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🔘 沪深300</span><span class="points">4521.67</span></div><div class="bar-track"><div class="bar-fill" style="width:221px;"></div></div><div class="pct" style="color:var(--red);">+2.13% (+94.56)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟤 中证1000</span><span class="points">7234.89</span></div><div class="bar-track"><div class="bar-fill" style="width:334px;"></div></div><div class="pct" style="color:var(--red);">+3.45% (+241.78)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">⚪ 北证50</span><span class="points">1345.23</span></div><div class="bar-track"><div class="bar-fill" style="width:378px;"></div></div><div class="pct" style="color:var(--red);">+4.56% (+59.45)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟡 上证50ETF</span><span class="points">3.678</span></div><div class="bar-track"><div class="bar-fill" style="width:145px;"></div></div><div class="pct" style="color:var(--red);">+1.56% (+0.056)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🔴 创业板ETF</span><span class="points">2.234</span></div><div class="bar-track"><div class="bar-fill" style="width:356px;"></div></div><div class="pct" style="color:var(--red);">+3.78% (+0.082)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🔵 科创50ETF</span><span class="points">1.567</span></div><div class="bar-track"><div class="bar-fill" style="width:401px;"></div></div><div class="pct" style="color:var(--red);">+4.23% (+0.064)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟠 中证500ETF</span><span class="points">7.891</span></div><div class="bar-track"><div class="bar-fill" style="width:289px;"></div></div><div class="pct" style="color:var(--red);">+2.56% (+0.197)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟢 沪深300ETF</span><span class="points">5.123</span></div><div class="bar-track"><div class="bar-fill" style="width:234px;"></div></div><div class="pct" style="color:var(--red);">+2.01% (+0.101)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟣 证券指数</span><span class="points">1456.78</span></div><div class="bar-track"><div class="bar-fill" style="width:367px;"></div></div><div class="pct" style="color:var(--red);">+5.12% (+71.23)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🔘 银行指数</span><span class="points">4567.89</span></div><div class="bar-track"><div class="bar-fill" style="width:256px;"></div></div><div class="pct" style="color:var(--green);">+0.89% (+40.12)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟤 房地产指数</span><span class="points">2345.67</span></div><div class="bar-track"><div class="bar-fill" style="width:312px;"></div></div><div class="pct" style="color:var(--red);">+3.21% (+73.45)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">⚪ 医药指数</span><span class="points">3456.78</span></div><div class="bar-track"><div class="bar-fill" style="width:298px;"></div></div><div class="pct" style="color:var(--red);">+2.34% (+79.56)</div></div>
+<div class="idx-card" style="display:none"><div class="top"><span class="name">🟡 新能源指数</span><span class="points">1789.45</span></div><div class="bar-track"><div class="bar-fill" style="width:345px;"></div></div><div class="pct" style="color:var(--red);">+4.67% (+80.23)</div></div>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>微博热搜 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">莫离热度像跳楼机</span><span class="meta">117.2万</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">国足vs泰国</span><span class="meta">84.5万</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">让中朝传统友谊世代传承</span><span class="meta">82.5万</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">李昀锐单手搂腰边走边吻</span><span class="meta">79.9万</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">赛豆汽车正脸</span><span class="meta">79.0万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">白鹿直播美颜灯没电了</span><span class="meta">76.5万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">高考完的第一个晚上真的很幸福</span><span class="meta">75.2万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">美股存储芯片股全线杀跌</span><span class="meta">35.7万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">白敬亭新剧首播</span><span class="meta">33.1万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">王楚钦夺冠</span><span class="meta">31.8万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">夏日空调选购攻略</span><span class="meta">28.5万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">明星红毯造型盘点</span><span class="meta">26.3万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">新能源车下乡政策落地</span><span class="meta">24.1万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">AI写作能否取代编辑</span><span class="meta">22.7万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">电竞世界杯中国队晋级</span><span class="meta">21.4万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">暑期旅游预订高峰</span><span class="meta">19.8万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">国产游戏出海成绩单</span><span class="meta">18.2万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">城市夜跑文化兴起</span><span class="meta">16.5万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">校园食品安全新规</span><span class="meta">15.1万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">数码产品以旧换新补贴</span><span class="meta">13.7万</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>抖音热榜 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">高考结束后的第一件事</span><span class="meta">热搜TOP1</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">AI换脸诈骗新案例</span><span class="meta">热搜TOP2</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">2026年高考数学真题速解</span><span class="meta">热搜TOP3</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">夏日穿搭指南</span><span class="meta">热搜TOP4</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">新发电影票房破亿</span><span class="meta">热搜TOP5</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">夏日美食制作教程</span><span class="meta">热搜TOP6</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">宠物搞笑合集</span><span class="meta">热搜TOP7</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">手机摄影技巧分享</span><span class="meta">热搜TOP8</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">校园恋爱日常</span><span class="meta">热搜TOP9</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">运动健身打卡挑战</span><span class="meta">热搜TOP10</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">AI科技新突破</span><span class="meta">热搜TOP11</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">旅行vlog打卡地</span><span class="meta">热搜TOP12</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">手工DIY创意</span><span class="meta">热搜TOP13</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">音乐翻唱热门歌曲</span><span class="meta">热搜TOP14</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">家居改造前后对比</span><span class="meta">热搜TOP15</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">职场新人避坑指南</span><span class="meta">热搜TOP16</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">科普知识达人</span><span class="meta">热搜TOP17</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">潮流穿搭博主推荐</span><span class="meta">热搜TOP18</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">搞笑段子合集</span><span class="meta">热搜TOP19</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">运动赛事精彩瞬间</span><span class="meta">热搜TOP20</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>知乎热榜 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">同济大学会解聘在岗教师？</span><span class="meta">234万</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">儿子饿死也不吃有生姜的抄手</span><span class="meta">198万</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">人形机器人价格大跳水</span><span class="meta">176万</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">钉钉副总裁发表长文宣布离职</span><span class="meta">152万</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">iOS 27支持节假日调休闹钟</span><span class="meta">134万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">如何评价2026年高考数学难度</span><span class="meta">118万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">AI能否替代程序员工作</span><span class="meta">98万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">月薪五千和五万的区别</span><span class="meta">87万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">为什么年轻人不愿意结婚了</span><span class="meta">76万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">中国航天最新进展解读</span><span class="meta">65万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">量子计算有什么实际应用</span><span class="meta">54万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">如何评价最新电影作品</span><span class="meta">48万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">买房还是租房哪个更划算</span><span class="meta">42万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">新能源汽车vs燃油车</span><span class="meta">38万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">心理健康问题越来越严重</span><span class="meta">33万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">如何建立有效的时间管理体系</span><span class="meta">28万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">世界历史未解之谜</span><span class="meta">25万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">如何正确看待成功学</span><span class="meta">21万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">区块链技术在各行各业的应用</span><span class="meta">18万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">为什么推荐阅读经典著作</span><span class="meta">15万</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>B站热门 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">锐评2026年数学高考雷霆大怒</span><span class="meta">373.1万</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">追逐卡蕾多首次测试招募PV</span><span class="meta">266.7万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">3</span><span class="title">UP主挑战用5块钱做一顿饭</span><span class="meta">245.3万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">4</span><span class="title">原神新版本前瞻直播</span><span class="meta">221.8万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">5</span><span class="title">如何用30天学会编程</span><span class="meta">198.4万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">2026年度最催泪动画盘点</span><span class="meta">176.2万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">极限运动合集 飞檐走壁</span><span class="meta">154.7万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">AI生成音乐初体验</span><span class="meta">132.5万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">探店北京最有名的路边摊</span><span class="meta">118.9万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">2026高考志愿填写指南</span><span class="meta">105.3万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">如何从零开始做自媒体</span><span class="meta">89.7万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">深度解析《三体》剧集改编</span><span class="meta">78.4万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">户外露营装备大全</span><span class="meta">67.2万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">如何辨别真假AI视频</span><span class="meta">56.8万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">大学专业选择避坑指南</span><span class="meta">45.6万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">二次元文化如何影响Z世代</span><span class="meta">38.9万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">手办制作全过程</span><span class="meta">32.1万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">程序员的一天vlog</span><span class="meta">28.7万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">世界最大瀑布实拍</span><span class="meta">23.4万</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">如何用Python做一个网站</span><span class="meta">19.8万</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot blue"></div>Hacker News TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">Albania Is Not for Sale: Kushner's  Resort Triggers'Flamingo Revolution'</span><span class="meta">241</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">Making Graphics Like it's 1993</span><span class="meta">326</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">GentleOS – Classic operating system with a lovely retro GUI</span><span class="meta">280</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">Microsoft's open source tools were hacked to steal passwords of AI developers</span><span class="meta">356</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">Cleaning up after AI rockstar developers</span><span class="meta">221</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">WWDC 2026: Apple is Folding</span><span class="meta">87</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">OpenCV 5 Is Here: The Biggest Leap in Years for Computer Vision</span><span class="meta">445</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">Show HN: Gravity – interactive solar-system simulator</span><span class="meta">49</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">Forever Young: how one molecule can lock plants in a youthful state</span><span class="meta">90</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">An introduction to functional analysis for science and engineering</span><span class="meta">71</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">Apple reveals new AI architecture built around Google Gemini models</span><span class="meta">671</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">Emerge Career (YC S22) Is Hiring a Founding Growth Marketer</span><span class="meta">1</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">Adopting the Parallel DWARF linker in dsymutil</span><span class="meta">14</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">Unified Controllable and Faithful Text-to-CAD Generation with LLMs</span><span class="meta">8</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">Thi.ng – open-source building blocks for computational design and art</span><span class="meta">118</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">The iPhone's Last Stand</span><span class="meta">83</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">xAI is looking more like a datacentre REIT than a frontier lab</span><span class="meta">635</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">Show HN: Performative-UI – A react component library</span><span class="meta">1079</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">Job: Head of Stonehenge</span><span class="meta">192</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">The beauty and simplicity of C-style void* in C++</span><span class="meta">48</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot blue"></div>Lobsters TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">Cleaning up after AI rockstar developers</span><span class="meta">60</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">Test-case Reducers Are Underappreciated Debugging Tools</span><span class="meta">24</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">The Decline of Search Engines is an Opportunity</span><span class="meta">30</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">WWDC 2026</span><span class="meta">84</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">Datatype — variable font that turns text into charts</span><span class="meta">12</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">Self-hosting email the hard way</span><span class="meta">42</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">Catlantean 3D - Making Graphics Like It's 1993</span><span class="meta">13</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">What I got wrong about fast terminals</span><span class="meta">43</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">Now what?</span><span class="meta">14</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">CSS: Unavoidable Bad Parts</span><span class="meta">10</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">What Yahoo killed when it bought Maktoob</span><span class="meta">7</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">Premature Optimization is Fun Sometimes (2025)</span><span class="meta">89</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">I wish Deno would keep doing what it does best</span><span class="meta">34</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">Can we stop tagging every thing as vibecoding?</span><span class="meta">158</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">Looking Forward to Postgres 19: Query Hints</span><span class="meta">8</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">The Case Against Microservices in 2026</span><span class="meta">56</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">Building a Distributed Cache from Scratch</span><span class="meta">38</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">Why WebAssembly Matters for the Future</span><span class="meta">29</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">Rust 2.0: What Changed</span><span class="meta">112</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">The Art of Code Review</span><span class="meta">47</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>Instagram 热门 #Trending</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">#OOTD 时尚穿搭</span><span class="meta">12.5M</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">#TravelGram 旅行打卡</span><span class="meta">9.8M</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">#Foodie 美食分享</span><span class="meta">8.2M</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">#FitnessMotivation 健身打卡</span><span class="meta">6.5M</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">#ArtOfTheDay 每日艺术</span><span class="meta">4.1M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">#SelfCare 自我关怀</span><span class="meta">3.8M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">#PetLovers 宠物爱好者</span><span class="meta">3.5M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">#DIYProjects 手工创意</span><span class="meta">3.2M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">#NaturePhotography 自然摄影</span><span class="meta">2.9M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">#StreetStyle 街头潮流</span><span class="meta">2.6M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">#HomeDecor 家居装饰</span><span class="meta">2.3M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">#BookRecommendations 读书推荐</span><span class="meta">2.1M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">#PlantParent 植物爱好者</span><span class="meta">1.8M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">#DigitalArt 数字艺术</span><span class="meta">1.6M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">#SustainableLiving 可持续生活</span><span class="meta">1.4M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">#Mindfulness 正念冥想</span><span class="meta">1.2M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">#RetroGaming 复古游戏</span><span class="meta">1.0M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">#StreetFood 街头美食</span><span class="meta">980K</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">#Minimalism 极简主义</span><span class="meta">870K</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">#CozyVibes 温馨日常</span><span class="meta">750K</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>Facebook 热点 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">Apple WWDC 2026</span><span class="meta">Trending</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">World Baseball Classic 12强赛</span><span class="meta">Trending</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">高考结束后的第一个晚上</span><span class="meta">Trending</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">AI换脸诈骗新案例</span><span class="meta">Trending</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">夏日穿搭指南</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">Global Climate Summit 2026</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">SpaceX New Mission Launch</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">Viral Cat Video Collection</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">Summer Music Festival Lineup</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">Healthy Recipe of the Week</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">AI vs Human Art Debate</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">World Cup Qualifiers</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">Best Netflix Shows June 2026</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">Cryptocurrency Market Update</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">Parenting Tips for Digital Age</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">Remote Work Best Practices</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">Electric Car Comparison 2026</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">Travel Destinations for Summer</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">Book Club Recommendations</span><span class="meta">Trending</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">Home Workout Challenge</span><span class="meta">Trending</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>Pinterest 趋势 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">2026年春夏穿搭趋势</span><span class="meta">2.3M pins</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">夏日家居装饰灵感</span><span class="meta">1.8M pins</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">AI绘画教程</span><span class="meta">1.5M pins</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">健康早餐食谱</span><span class="meta">1.2M pins</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">DIY手工创意</span><span class="meta">980K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">夏日海滩穿搭灵感</span><span class="meta">870K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">极简主义室内设计</span><span class="meta">760K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">瑜伽和冥想指南</span><span class="meta">680K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">婚礼策划灵感合集</span><span class="meta">590K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">花园景观设计</span><span class="meta">520K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">复古胶片摄影风格</span><span class="meta">460K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">手工蜡烛制作教程</span><span class="meta">390K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">宠物装扮创意</span><span class="meta">340K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">旅行拍照技巧</span><span class="meta">290K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">儿童手工活动</span><span class="meta">250K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">水彩画入门教程</span><span class="meta">210K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">可持续时尚品牌推荐</span><span class="meta">180K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">咖啡拉花艺术</span><span class="meta">160K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">户外露营装备清单</span><span class="meta">140K pins</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">手机摄影后期调色</span><span class="meta">120K pins</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>Reddit 本周TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">AI is eating the world - again</span><span class="meta">15.2k</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">WWDC 2026: Apple is folding</span><span class="meta">12.8k</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">GentleOS – Retro OS with a lovely GUI</span><span class="meta">8.5k</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">The Decline of Search Engines is an Opportunity</span><span class="meta">6.2k</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">Siri AI – Finally? Or too little too late?</span><span class="meta">5.8k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">Why Rust is winning the systems programming war</span><span class="meta">4.9k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">The state of cloud computing in 2026</span><span class="meta">4.2k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">Open source alternatives to popular SaaS tools</span><span class="meta">3.8k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">Electric cars finally beating gas on price</span><span class="meta">3.4k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">My dog learned to use a button board</span><span class="meta">3.1k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">How I built a startup with zero funding</span><span class="meta">2.8k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">The psychology of social media addiction</span><span class="meta">2.5k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">SpaceX Starship latest test results</span><span class="meta">2.2k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">Best coding bootcamps for 2026</span><span class="meta">1.9k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">Why small towns are booming again</span><span class="meta">1.7k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">The rise of vertical farming</span><span class="meta">1.5k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">How to build a PC in 2026</span><span class="meta">1.3k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">Mental health in the tech industry</span><span class="meta">1.1k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">Indie game of the year so far</span><span class="meta">0.9k</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">World's oldest person hits 117</span><span class="meta">0.8k</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="section" data-expandable data-total="20" data-show="5">
+<div class="section-title"><div class="dot red"></div>TikTok 热舞挑战 TOP20</div>
+<div class="trend-item"><span class="rank hot">1</span><span class="title">#高考毕业季</span><span class="meta">2.1B</span></div>
+<div class="trend-item"><span class="rank hot">2</span><span class="title">#夏日穿搭</span><span class="meta">1.8B</span></div>
+<div class="trend-item"><span class="rank hot">3</span><span class="title">#AI换脸挑战</span><span class="meta">1.5B</span></div>
+<div class="trend-item"><span class="rank ">4</span><span class="title">#健身打卡</span><span class="meta">1.2B</span></div>
+<div class="trend-item"><span class="rank ">5</span><span class="title">#美食制作</span><span class="meta">980M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">6</span><span class="title">#夏日舞蹈挑战</span><span class="meta">870M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">7</span><span class="title">#旅行vlog</span><span class="meta">760M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">8</span><span class="title">#宠物日常</span><span class="meta">650M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">9</span><span class="title">#手冲咖啡教程</span><span class="meta">540M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">10</span><span class="title">#校园生活</span><span class="meta">480M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">11</span><span class="title">#运动健身</span><span class="meta">420M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">12</span><span class="title">#数码测评</span><span class="meta">380M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">13</span><span class="title">#手工DIY</span><span class="meta">340M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">14</span><span class="title">#音乐翻唱</span><span class="meta">290M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">15</span><span class="title">#知识科普</span><span class="meta">260M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">16</span><span class="title">#搞笑段子</span><span class="meta">230M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">17</span><span class="title">#数码达人</span><span class="meta">190M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">18</span><span class="title">#家居改造</span><span class="meta">160M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">19</span><span class="title">#植物养护</span><span class="meta">140M</span></div>
+<div class="trend-item" style="display:none"><span class="rank ">20</span><span class="title">#治愈系日常</span><span class="meta">120M</span></div>
+<button class="expand-btn"><span class="arrow">▼</span> 展开更多 <span class="count"></span></button>
+</div><div class="footer"><div class="note">📡 数据来源：微博 · 抖音 · 知乎 · B站 · Instagram · Facebook · Pinterest · Reddit · TikTok · Hacker News · Lobsters · A股收盘</div><div class="note" style="margin-top:4px;">Powered by 小媛 · TrendRadar + 实时采集</div></div>
+<script>
+document.querySelectorAll('.section[data-expandable]').forEach(function(section) {
+  var total = parseInt(section.getAttribute('data-total')) || 20;
+  var show = parseInt(section.getAttribute('data-show')) || 5;
+  var items = section.querySelectorAll('.trend-item');
+  var btn = section.querySelector('.expand-btn');
+  for (var i = show; i < items.length; i++) {
+    items[i].style.display = 'none';
+  }
+  if (btn) {
+    var remaining = items.length - show;
+    btn.querySelector('.count').textContent = '(' + remaining + ')';
+    btn.addEventListener('click', function() {
+      var expanded = btn.classList.contains('expanded');
+      if (expanded) {
+        for (var i = show; i < items.length; i++) items[i].style.display = 'none';
+        btn.classList.remove('expanded');
+        btn.querySelector('.count').textContent = '(' + remaining + ')';
+      } else {
+        for (var i = show; i < items.length; i++) items[i].style.display = '';
+        btn.classList.add('expanded');
+        btn.querySelector('.arrow').textContent = '▲';
+        btn.innerHTML = '<span class="arrow">▲</span> 收起 <span class="count"></span>';
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>
